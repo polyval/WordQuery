@@ -29,7 +29,8 @@ class Japanesepod(WebService):
         url = get_from_jisho(self.word)
         if not url:
             url = get_from_japod(self.word)
-
+        if not url:
+            return
 
         urllib.urlretrieve(url, audio_name)
         with open(audio_name, 'rb') as f:
@@ -58,7 +59,7 @@ def get_from_japod(word):
     url = u"https://www.japanesepod101.com/learningcenter/reference/dictionary_post"
     params = {u'post': u'dictionary_reference',
                     u'match_type': u'exact',
-                    u'search_query': self.word.encode('utf-8')}
+                    u'search_query': word.encode('utf-8')}
     headers={"User-Agent":"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1"}
     data = urllib.urlencode(params)
     req = urllib2.Request(url, data, headers)
